@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chloe & Patrick — A Love Story</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Quattrocento+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --cream: #fdf6ee;
+            --blush: #e8c9b8;
+            --dusty-rose: #c4886f;
+            --ink: #2a1f1a;
+            --warm-gray: #8a7b74;
+            --gold: #c9a96e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--ink);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.4;
+        }
+
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, var(--dusty-rose), transparent);
+        }
+
+        .cover-ornament {
+            font-size: 1.2rem;
+            color: var(--gold);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            font-family: 'Quattrocento Sans', sans-serif;
+            font-size: 0.65rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 1.2s ease forwards 0.3s;
+        }
+
+        .cover-title {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            animation: fadeUp 1.2s ease forwards 0.6s;
+        }
+
+        .cover-title em {
+            color: var(--dusty-rose);
+            font-style: italic;
+        }
+
+        .cover-subtitle {
+            margin-top: 1.5rem;
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--warm-gray);
+            opacity: 0;
+            animation: fadeUp 1.2s ease forwards 0.9s;
+        }
+
+        .cover-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2.5rem 0;
+            opacity: 0;
+            animation: fadeUp 1.2s ease forwards 1.1s;
+        }
+
+        .cover-divider span {
+            width: 60px;
+            height: 1px;
+            background: var(--blush);
+        }
+
+        .cover-divider em {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        /* Story layout */
+        .story {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 5rem 2rem 8rem;
+        }
+
+        .chapter {
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease forwards;
+        }
+
+        .chapter:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .chapter:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .chapter:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .chapter:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .chapter:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .chapter-label {
+            font-family: 'Quattrocento Sans', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .chapter-title {
+            font-size: 2rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--dusty-rose);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .chapter p {
+            font-size: 1.2rem;
+            line-height: 1.95;
+            color: var(--ink);
+            margin-bottom: 1.4em;
+            font-weight: 300;
+        }
+
+        .chapter p:first-of-type::first-letter {
+            font-size: 4rem;
+            float: left;
+            line-height: 0.75;
+            margin-right: 0.1em;
+            margin-top: 0.1em;
+            color: var(--dusty-rose);
+            font-weight: 400;
+        }
+
+        .pull-quote {
+            border-left: 2px solid var(--blush);
+            padding: 1.5rem 2rem;
+            margin: 2.5rem 0;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--dusty-rose);
+            line-height: 1.5;
+        }
+
+        .chapter-break {
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.4rem;
+            letter-spacing: 0.8em;
+            margin: 4rem 0;
+            opacity: 0.5;
+        }
+
+        .ending {
+            text-align: center;
+            padding: 4rem 2rem 6rem;
+            position: relative;
+        }
+
+        .ending-line {
+            font-size: 1.6rem;
+            font-style: italic;
+            color: var(--warm-gray);
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .ending-ornament {
+            color: var(--gold);
+            font-size: 2rem;
+            letter-spacing: 1em;
+            display: block;
+            padding-left: 1em;
+            margin-top: 2rem;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chapter p {
+                font-size: 1.05rem;
+            }
+
+            .cover-title {
+                letter-spacing: -0.01em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- COVER -->
+    <div class="cover">
+        <div class="cover-ornament">✦ &nbsp; A Love Story &nbsp; ✦</div>
+        <h1 class="cover-title">Chloe<br>&amp; <em>Patrick</em></h1>
+        <p class="cover-subtitle">On being hopelessly, irreversibly, magnificently undone</p>
+        <div class="cover-divider">
+            <span></span>
+            <em>❧</em>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- STORY -->
+    <div class="story">
+
+        <div class="chapter">
+            <span class="chapter-label">One</span>
+            <h2 class="chapter-title">The Bookshop on Crane Street</h2>
+            <p>Patrick first saw her on a Tuesday — which was, until that moment, his least favorite day of the week.
+                She was standing in the narrow aisle of Crane Street Books with a novel pressed against her chest and
+                her eyes squeezed shut, as though she was trying to absorb the whole story through her sternum. He
+                stopped mid-stride and watched, a copy of some architecture tome dangling forgotten from his hand.</p>
+            <p>She opened her eyes. They were brown with a ring of amber at the center — like the moment right before a
+                match catches fire. She didn't notice him watching. She simply slid the book back onto the shelf, tilted
+                her head at the spine as though having a private disagreement with it, and turned down the next aisle.
+            </p>
+            <p>He followed. Not in a strange way. In the way water follows gravity — helplessly, and without knowing
+                there was ever another option.</p>
+            <p>"That one's devastating," he said, nodding at the shelf she'd just abandoned.</p>
+            <p>She turned, surprised, then looked back at the book. "I know," she said. "That's why I put it down. I'm
+                not in a devastating mood."</p>
+            <p>"What kind of mood are you in?"</p>
+            <p>She thought about it seriously, which he immediately loved. "A Wednesday mood," she said finally.
+                "Something hopeful. Not too loud."</p>
+            <p>He pulled a slim, pale-covered book from a shelf nearby and offered it without checking the title. "Try
+                this one."</p>
+            <p>She looked at him with those fire-ring eyes and accepted it. "You haven't even looked at it."</p>
+            <p>"I don't need to," Patrick said. "It's yours."</p>
+            <p>Her name was Chloe. He found that out twelve minutes later at the register, when the bookseller said it
+                while handing back her card. Chloe. Of course. It fit her the way a word fits a thing it was invented
+                for.</p>
+        </div>
+
+        <div class="chapter-break">· · ·</div>
+
+        <div class="chapter">
+            <span class="chapter-label">Two</span>
+            <h2 class="chapter-title">The Things He Memorized</h2>
+            <p>He ran into her again at the farmers' market six days later — or rather, she appeared beside the tomato
+                stall and his entire nervous system staged a small revolution. He said hello as if they were old
+                friends. She said hello as if she almost remembered him, and then did.</p>
+            <p>"The bookshop," she said. "The man with the mystery novel."</p>
+            <p>"Architecture." He corrected, mortified that he'd corrected her.</p>
+            <p>She laughed — a quick, surprised sound — and he stored it carefully, the way people store things they're
+                already afraid to lose.</p>
+
+            <div class="pull-quote">"He was not in love with her yet. But he was already the person he would become
+                because of her."</div>
+
+            <p>They walked through the market together for forty minutes, and by the end Patrick had catalogued
+                everything: the way she held her canvas bag with both hands when it got heavy. The way she paused at
+                each stall like it deserved her full consideration. The way she laughed first with her eyes — the
+                corners crinkling before her mouth had made up its mind. The small scar near her left eyebrow that she
+                touched when she was thinking.</p>
+            <p>He was not in love with her yet. But he was already the person he would become because of her, and
+                somewhere underneath the noise of the market, he sensed the ground shifting, and he let it.</p>
+        </div>
+
+        <div class="chapter-break">· · ·</div>
+
+        <div class="chapter">
+            <span class="chapter-label">Three</span>
+            <h2 class="chapter-title">All the Distances</h2>
+            <p>They became friends the way fires become fires — slowly, and then all at once.</p>
+            <p>Coffee on Fridays. Texts about strange things they saw on their commutes. A shared playlist she started
+                called <em>For Tuesday People</em> that had nothing sad in it, only songs that felt like late afternoon
+                light through a clean window. He added to it secretly at first, then openly, and each addition was a
+                small declaration neither of them named.</p>
+            <p>Patrick had been in love before — or something adjacent to it. But this was different. This felt
+                cellular. Like his whole body had been quietly reorganizing itself around her without asking permission.
+                He noticed it in foolish ways: that he walked faster toward any room she was in. That he saved the good
+                stories for her. That her opinion of ordinary things — a film, a meal, a piece of music — mattered more
+                to him than his own.</p>
+            <p>He told his friend Dara about it one evening, trying to sound casual.</p>
+            <p>"She's funny," he said. "And kind. Not in a soft way — in a deliberate way. Like she chose to be."</p>
+            <p>Dara watched him. "You're insane about her."</p>
+            <p>Patrick opened his mouth to disagree. Closed it. "Yeah," he said quietly. "I think I am."</p>
+            <p>It was the first time he'd said it out loud, and it felt less like confession and more like relief — like
+                finally setting down something heavy he'd been carrying for so long he'd forgotten it had weight.</p>
+        </div>
+
+        <div class="chapter-break">· · ·</div>
+
+        <div class="chapter">
+            <span class="chapter-label">Four</span>
+            <h2 class="chapter-title">The Night It Rained</h2>
+            <p>It rained on the night of Dara's birthday party — the kind of rain that makes the city smell like
+                something new. Chloe arrived late, her coat dark-patched with it, and found Patrick standing by the
+                kitchen window watching the street below. He turned when she came in and something crossed his face that
+                he didn't manage to hide in time.</p>
+            <p>She stopped. "What?" she asked, touching her hair, thinking she looked a mess.</p>
+            <p>"Nothing," he said. "You're just—" He stopped himself.</p>
+            <p>"I'm just what?"</p>
+            <p>For a long moment, Patrick said nothing. The party moved around them — music, laughter, the clink of
+                glasses — but in the kitchen doorway it was very quiet. He looked at her the way she had looked at that
+                book in the shop: like something he was trying to hold without touching.</p>
+            <p>"You make everything better," he said finally. "Every room you walk into. Every day I know I might see
+                you." He exhaled. "I've been trying to find a smaller way to say it but there isn't one."</p>
+            <p>Chloe was very still.</p>
+            <p>"I'm completely, ridiculously gone on you," Patrick said. "I have been for a while. I know that might be
+                — I know it's a lot. I'm not trying to make it your problem. I just couldn't—" He stopped. "I couldn't
+                not say it anymore."</p>
+            <p>The rain against the window. Somewhere behind them, someone laughed at a joke they'd missed entirely.</p>
+            <p>Chloe crossed the kitchen and kissed him — just briefly, just once — and pulled back to look at his face.
+            </p>
+            <p>"I added seventeen songs to that playlist," she said softly, "and every single one was for you."</p>
+        </div>
+
+        <div class="chapter-break">· · ·</div>
+
+        <div class="chapter">
+            <span class="chapter-label">Five</span>
+            <h2 class="chapter-title">What Happened After</h2>
+            <p>What happened after was not dramatic. It was better than that.</p>
+            <p>It was Sunday mornings with the newspaper divided into territories. It was Chloe reading aloud from books
+                she loved, her voice rising at the good parts, Patrick watching her instead of listening. It was the
+                playlist growing into something neither of them had planned — four hundred songs, each one a small
+                memory, a date, an ordinary afternoon made permanent.</p>
+            <p>He stayed insane about her. That never changed. He was insane about the way she negotiated with
+                houseplants, addressing them by name, gently scolding the fern. Insane about her certainty — the way she
+                knew what she thought, and said so, and was also capable of changing her mind when given good reason.
+                Insane about the fact that she had chosen him, which continued to strike him, daily, as one of the great
+                inexplicable gifts of his life.</p>
+
+            <div class="pull-quote">"She had not rescued him or completed him. She had simply made being himself feel
+                like enough."</div>
+
+            <p>And Chloe — Chloe, who had put down the devastating novel because she'd been in a Wednesday mood — found
+                that loving Patrick was the most Wednesday thing she'd ever done. Hopeful. Not too loud. A light through
+                a clean window, steady and warm and never once unkind.</p>
+            <p>She had not rescued him or completed him. She had simply made being himself feel like enough. And he had
+                done the same for her, in his particular, ardent, slightly-too-intense way.</p>
+            <p>There are people who move through the world like weather — changing everything they touch, and unaware of
+                it. Chloe was one of those people. And Patrick, who noticed everything, who had been watching from the
+                beginning, was simply grateful to stand in the middle of it, drenched and not minding at all.</p>
+        </div>
+
+    </div>
+
+    <div class="ending">
+        <p class="ending-line">"You make everything better. Every room you walk into. Every day I know I might see you."
+        </p>
+        <span class="ending-ornament">✦ ✦ ✦</span>
+    </div>
+
+</body>
+
+</html>
